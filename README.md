@@ -20,7 +20,7 @@
   You can clone this repository from github.com/coleleg/password-generator.  No installation is required for use.
   
   ## Usage
-  Users can access the webpage for this application at     .  Once you're on the webpage, simply click 'Generate Password' and follow the prompts to create a new password.  After creating a password, users may click 'Generate Password' again to restart the process.
+  Users can access the webpage for this application at https://coleleg.github.io/password-generator/.  Once you're on the webpage, simply click 'Generate Password' and follow the prompts to create a new password.  After creating a password, users may click 'Generate Password' again to restart the process.
   
   ## Licenses
   This application was made using the MIT license.
