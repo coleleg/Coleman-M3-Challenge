@@ -1,175 +1,116 @@
-// Assignment code here
-var length = "";
-var numeric = "";
-var lowerCase = "";
-var upperCase = "";
-var special = "";
-var numericChars = "0123456789"
-var lowerChars = "abcdefghijklmnopqrstuvwxyz";
-var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-var specialChars = "!@#$%^&*_-+=";
-var includedChars = function() {
-   if (numeric === "Y") {
-  includedChars += numericChars;
-  return includedChars;
+// Password
+let password = "";
+
+// Password Criteria
+let criteria = {
+  length: 0,
+  lowerCase: false,
+  upperCase: false,
+  numbers: false,
+  specialCharacters: false,
+  // char = character
+  charSet: ""
 }
-if (lowerCase === "Y") {
-  includedChars += lowerChars;
-  return includedChars;
-}
-if (upperCase === "Y") {
-  includedChars += upperChars;
-  return includedChars;
-}
-if (special === "Y") {
-  includedChars += specialChars;
-  return includedChars;
+
+// Possible character sets
+const lowerSet = "abcdefghijklmnopqrstuvwxyz";
+const upperSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const numberSet = "0123456789";
+const specialSet = "!@#$%^&*()_+-=";
+
+// HTML query
+const generateBtn = document.querySelector('#generate');
+const passwordTextArea = document.querySelector('#password');
+
+
+// Prompts User to Input a PW Length
+function checkLength () {
+  criteria.length = window.prompt("Please enter a desired password length between 8 and 128 characters.");
+    if (criteria.length < 8 || criteria.length > 128) {
+      alert("Please enter a valid length.")
+      checkLength();
+    }
 };
-}
-console.log("Your included characters are " + includedChars);
 
-// Prompts user to input criteria
-var promptCriteria = function() {
-  window.alert("Please set the criteria for your password.");
-}
+// Prompts user to choose character sets
+function checkCharacters () {
+  criteria.lowerCase = window.confirm("Would you like to include lowercase letters?")
+  criteria.upperCase = window.confirm("Would you like to include uppercase letters?")
+  criteria.numbers = window.confirm("Would you like to include numbers?")
+  criteria.specialCharacters = window.confirm("Would you like to include special characters (#$%^ etc.)?")
 
-// Asks for password length
-var getLength = function() {
-  var length = prompt("What is the desired length of your passowrd?  Select a value between 8 and 128.")
-    if (length >+ 8 && length <= 128) {
-      alert ("You have selected " + length + " characters as your password length.");
-    }
-    else {
-      alert("You need to choose a valid option.  Try again.")
-      getLength();
-    }
-     
-    console.log("The length of your password is " + length);
-    return length;
-}
-
-// Confirms whether user would like to include numerical values
-var checkNumeric = function() {
-  numeric = prompt("Would you like to include numerical values in your password? Type 'Y' for YES and 'N' for NO.");
-  numeric = numeric.toUpperCase();
-
-    if (numeric === "Y") {
-      window.alert("You have selected YES to numerical values.");
+  if (!criteria.lowerCase && !criteria.upperCase && !criteria.numbers && !criteria.specialCharacters) {
+    alert("Your password must include at least one character set.")
+    checkCharacters();
   }
-    else if (numeric === "N") {
-      window.alert("You have selected NO to numerical values.");
-    }
-      else {
-        window.alert("You need to choose a valid option. Try again.");
-        checkNumeric();
-    }
-      console.log("You have selected " + numeric + " to numeric values.");
-      return numeric;
+console.log(criteria.length);
+console.log(criteria.lowerCase);
+console.log(criteria.upperCase);
+console.log(criteria.numbers);
+console.log(criteria.specialCharacters);
+};
 
+// Creates a character set based on user input
+function createSet () {
+  if (criteria.lowerCase) {
+    criteria.charSet = criteria.charSet + lowerSet;
   }
-
-  // Confirms whether user would like to use lowercase letters
-var checkLowercase = function() {
-  lowerCase = prompt("Would you like to include lowercase letters in your password? Type 'Y' for YES and 'N' for NO.");
-  lowerCase = lowerCase.toUpperCase();
-    if (lowerCase === "Y") {
-      window.alert("You have selected YES to lowercase letters.");
+  if (criteria.upperCase) {
+    criteria.charSet = criteria.charSet + upperSet
   }
-    else if (lowerCase === "N") {
-      window.alert("You have selected NO to lowercase letters.");
-    }
-      else {
-        window.alert("You need to choose a valid option. Try again.");
-        checkLowercase();
-      }
-
-  console.log("You have selected " + lowerCase + " to lowercase letters.");
-  return lowerCase;
-  
-  
-}
-
-// Confirms whether user would like to use uppercase letters
-var checkUppercase = function () {
-  upperCase = prompt("Would you like to include uppercase letters in your password? Type 'Y' for YES and 'N' for NO.");
-  upperCase = upperCase.toUpperCase();
-    if (upperCase === "Y") {
-      window.alert("You have selected YES to uppercase letters.");
+  if (criteria.numbers) {
+    criteria.charSet = criteria.charSet + numberSet
   }
-    else if (upperCase === "N") {
-      window.alert("You have selected NO to uppercase letters.");
-    }
-      else {
-        window.alert("You need to choose a valid option. Try again.");
-        checkUppercase();
-      }
-    console.log("You have selected " + upperCase + " to uppercase letters.")
-    return upperCase;
-}
-
-// Confirms whether user would like to use special characters
-var checkSpecial = function() {
-  special = prompt("Would you like to include special characters such as '!' or '?' in your password? Type 'Y' for YES and 'N' for NO.");
-  special = special.toUpperCase();
-
-      if (special === "Y") {
-          window.alert("You have selected YES to special characters.");
-      }
-      else if (special === "N") {
-        window.alert("You have selected NO to special characters.");
-      }
-        else {
-          window.alert("You need to choose a valid option. Try again.");
-          checkspecial();
-        }
-  console.log("You have selected " + special + " to specialacters.")
-  return special;
+  if (criteria.specialCharacters) {
+    criteria.charSet = criteria.charSet + specialSet
   }
-
-  // Confirms whether user input contained atleast 1 valid character type
-  var validateInput = function() {
-      if (numeric === "N" && lowerCase === "N" && upperCase === "N" && special === "N") {
-        alert("You must select at least one valid character type.  Click 'Generate Password' to try again.");
-      }
-    }
+  console.log(criteria.charSet);
+};
 
 
-      
-    
+// Picks characters from a random index of "charSet" and adds them to the password until the length criteria is met
+function writePW() {
+  for (i=0; i < criteria.length; i++) {
+    const charIndex = Math.floor(Math.random() * (criteria.charSet.length + 1));
+    password = password + criteria.charSet.charAt(charIndex);
+  }
+  console.log(password);
+  return password;
+};
 
-
-// Get references to the #generate element
-var generateBtn = document.querySelector("#generate");
-
-// Write password to the #password input
-function writePassword() {
-  promptCriteria();
-  getLength();
-  checkNumeric();
-  checkLowercase();
-  checkUppercase();
-  checkSpecial();
-  generatePassword();
-  validateInput();
-  includedChars();
-
-  var passwordText = document.querySelector("#password");
-
-  passwordText.value = generatePassword(length, includedChars);
-
-}
-
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
-
-// Password Info:
- var generatePassword = function (length, includedChars) {
+// Reset Criteria and password
+function reset () {
+  criteria = {
+    length: 0,
+    lowerCase: false,
+    upperCase: false,
+    numbers: false,
+    specialCharacters: false,
+    // char = character
+    charSet: ""
+  }
   password = "";
-  for (i=0; i < length; i++) {
-    password += includedChars (
-      Math.floor(Math.random) * includedChars.length)};
-      return password;
-  }
+};
+
+// Begins user prompts and prints password on screen.  Resets on each click.
+function generatePassword () {
+reset();
+console.log(criteria.charSet);
+checkLength();
+checkCharacters();
+createSet();
+writePW();
+passwordTextArea.innerHTML = password;
+};
+
+generateBtn.addEventListener('click', generatePassword);
+
+
+
+
+
+
+
   
 
 
