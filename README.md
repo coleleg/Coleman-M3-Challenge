@@ -1,6 +1,6 @@
 # Password Generator
 
-![image](![Screenshot (10)](https://user-images.githubusercontent.com/15861137/155037885-cc91de45-32b9-4391-8f94-5b46fec55f3b.png))
+![image](https://user-images.githubusercontent.com/15861137/155037885-cc91de45-32b9-4391-8f94-5b46fec55f3b.png)
 
  # Table of Contents
   * [Description](#description)
